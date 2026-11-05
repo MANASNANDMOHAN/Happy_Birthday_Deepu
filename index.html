@@ -203,6 +203,7 @@
     <button class="btn" type="submit">Send ✦</button>
   </form>
   <div id="wishCount"></div>
+  <a id="waBtn" class="btn" target="_blank" rel="noopener" style="display:none;margin-top:18px;text-decoration:none">Send my wishes to Manas 💌</a>
 </section>
 
 <div id="lb"><img alt=""><p></p></div>
@@ -274,12 +275,14 @@ document.getElementById('grid').innerHTML=reasons.map((r,i)=>`<div class="card r
 document.querySelectorAll('.card').forEach(c=>c.addEventListener('click',e=>{c.classList.toggle('flip');if(c.classList.contains('flip')){const b=c.getBoundingClientRect();burst(b.left+b.width/2,b.top+b.height/2,12,true)}}));
 
 /* ---------- wishes ---------- */
-let wishes=0;
+let wishes=0;const wishList=[];
 document.getElementById('wishForm').addEventListener('submit',e=>{e.preventDefault();const inp=document.getElementById('wishIn'),t=inp.value.trim();if(!t)return;
   const b=inp.getBoundingClientRect(),el=document.createElement('div');el.className='flying';el.textContent='✦ '+t;
   el.style.left=b.left+20+'px';el.style.top=b.top+'px';document.body.appendChild(el);
   requestAnimationFrame(()=>{el.style.transform=`translate(${(Math.random()-.5)*200}px,${-b.top-80}px) scale(.4)`;el.style.opacity=0});
-  setTimeout(()=>{el.remove();burst(innerWidth/2,40,50)},3000);inp.value='';wishes++;
+  setTimeout(()=>{el.remove();burst(innerWidth/2,40,50)},3000);inp.value='';wishes++;wishList.push(t);
+  const wa=document.getElementById('waBtn');wa.style.display='inline-block';
+  wa.href='https://wa.me/917061881844?text='+encodeURIComponent('My birthday wishes ✨\n\n'+wishList.map((w,i)=>(i+1)+'. '+w).join('\n')+'\n\n— Deepu 💖');
   document.getElementById('wishCount').textContent=wishes===1?'1 wish sent. The stars are listening ✨':`${wishes} wishes sent. The stars are listening ✨`});
 
 
