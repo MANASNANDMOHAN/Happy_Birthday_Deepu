@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Deepu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Great+Vibes&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#120a1f; --plum:#2a1438; --rose:#f2a7b8; --blush:#ffd9e1;
+    --gold:#f6c87a; --cream:#fff6ec; --ink:#3b2333;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',sans-serif;color:var(--cream);
+    background:radial-gradient(ellipse at 50% -10%,#3d1d4f 0%,var(--night) 55%) fixed;
+    min-height:100vh;overflow-x:hidden;
+  }
+  #stars,#fx{position:fixed;inset:0;pointer-events:none}
+  #stars{z-index:0}
+  #fx{z-index:50}
+  section{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 22px;text-align:center}
+  .script{font-family:'Great Vibes',cursive;font-weight:400}
+  .serif{font-family:'Cormorant Garamond',serif}
+  .eyebrow{letter-spacing:.35em;text-transform:uppercase;font-size:.72rem;color:var(--gold);opacity:.85;margin-bottom:18px}
+  h1.name{font-size:clamp(4.5rem,17vw,10rem);line-height:.9;color:var(--blush);text-shadow:0 0 40px rgba(242,167,184,.45)}
+  .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.2rem,3.6vw,1.6rem);opacity:.85;margin-top:14px;max-width:560px}
+  .count{display:flex;gap:clamp(10px,3vw,26px);margin-top:38px}
+  .unit{min-width:68px}
+  .unit b{display:block;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(2.2rem,8vw,3.6rem);color:var(--gold)}
+  .unit span{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;opacity:.6}
+  .scroll{position:absolute;bottom:28px;font-size:.75rem;letter-spacing:.3em;opacity:.55;animation:bob 2.4s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(8px)}}
+  h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-style:italic;font-size:clamp(2rem,6vw,3rem);color:var(--blush);margin-bottom:10px}
+  .hint{font-size:.85rem;opacity:.6;margin-bottom:34px}
+  button{font:inherit;cursor:pointer}
+  .btn{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:12px 26px;border-radius:999px;letter-spacing:.12em;font-size:.8rem;text-transform:uppercase;transition:.3s}
+  .btn:hover{background:var(--gold);color:var(--night)}
+
+  /* cake */
+  #cake{width:min(320px,80vw);cursor:pointer;filter:drop-shadow(0 20px 40px rgba(0,0,0,.4))}
+  .flame{transform-origin:50% 100%;animation:flick .18s ease-in-out infinite alternate}
+  @keyframes flick{from{transform:scale(1,1) rotate(-2deg)}to{transform:scale(.92,1.08) rotate(2deg)}}
+  .out .flame{animation:none;opacity:0;transition:opacity .4s}
+  .smoke{opacity:0}
+  .out .smoke{animation:smoke 2s ease-out forwards}
+  @keyframes smoke{0%{opacity:.7;transform:translateY(0)}100%{opacity:0;transform:translateY(-40px) scale(1.6)}}
+  #wishMsg{min-height:2em;margin-top:26px;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--gold);opacity:0;transition:opacity 1s}
+
+  /* envelope */
+  .env{position:relative;width:min(340px,86vw);aspect-ratio:3/2;cursor:pointer;perspective:900px}
+  .env-back{position:absolute;inset:0;background:#e8b4c0;border-radius:6px}
+  .env-front{position:absolute;inset:0;border-radius:6px;background:
+      linear-gradient(to top right,#f3c4cf 49.5%,transparent 50%) left/50% 100% no-repeat,
+      linear-gradient(to top left,#f3c4cf 49.5%,transparent 50%) right/50% 100% no-repeat;z-index:3}
+  .env-flap{position:absolute;top:0;left:0;right:0;height:60%;background:#dc9fae;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .7s ease;z-index:4}
+  .env.open .env-flap{transform:rotateX(180deg);z-index:1}
+  .seal{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:#a8324f;z-index:5;display:grid;place-items:center;color:var(--blush);font-size:1.2rem;transition:opacity .3s;box-shadow:0 3px 8px rgba(0,0,0,.3)}
+  .env.open .seal{opacity:0}
+  .peek{position:absolute;left:8%;right:8%;top:10%;bottom:6%;background:var(--cream);border-radius:4px;z-index:2;transition:transform .7s .4s ease}
+  .env.open .peek{transform:translateY(-38%)}
+  .letter{max-width:600px;width:100%;background:var(--cream);color:var(--ink);border-radius:6px;padding:clamp(30px,6vw,56px);text-align:left;margin-top:40px;box-shadow:0 30px 70px rgba(0,0,0,.45);
+    max-height:0;opacity:0;overflow:hidden;padding-top:0;padding-bottom:0;transition:max-height 1.4s ease,opacity 1s ease,padding .6s}
+  .letter.show{max-height:1600px;opacity:1;padding-top:clamp(30px,6vw,56px);padding-bottom:clamp(30px,6vw,56px)}
+  .letter p{font-family:'Cormorant Garamond',serif;font-size:1.22rem;line-height:1.65;margin-bottom:1em}
+  .letter .dear{font-family:'Great Vibes',cursive;font-size:2.4rem;color:#a8324f;margin-bottom:.4em}
+  .letter .sign{font-family:'Great Vibes',cursive;font-size:2.1rem;color:#a8324f;text-align:right;margin:0}
+
+  /* reasons */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;max-width:920px;width:100%}
+  .card{height:190px;perspective:800px;cursor:pointer}
+  .inner{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.3,.7,.3,1);transform-style:preserve-3d}
+  .card.flip .inner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;display:flex;align-items:center;justify-content:center;padding:22px}
+  .front{background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid rgba(246,200,122,.35)}
+  .front .n{font-family:'Cormorant Garamond',serif;font-size:3.2rem;color:var(--gold);font-weight:600}
+  .front .n small{display:block;font-family:'Inter';font-size:.62rem;letter-spacing:.3em;opacity:.6;font-weight:400;color:var(--cream)}
+  .back{background:linear-gradient(145deg,#f7c6d1,#f3a7b9);color:var(--ink);transform:rotateY(180deg);font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;line-height:1.4}
+
+  /* wish */
+  .wishbox{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;width:100%;max-width:520px}
+  .wishbox input{flex:1;min-width:220px;background:rgba(255,255,255,.06);border:1px solid rgba(246,200,122,.4);border-radius:999px;padding:13px 22px;color:var(--cream);font:inherit;outline:none}
+  .wishbox input::placeholder{color:rgba(255,246,236,.4)}
+  .flying{position:fixed;z-index:60;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:1.2rem;pointer-events:none;transition:transform 3s cubic-bezier(.4,0,.2,1),opacity 3s;white-space:nowrap}
+  #wishCount{margin-top:22px;font-size:.85rem;opacity:.6;min-height:1.2em}
+
+
+  /* memories */
+  .memories{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(18px,4vw,40px);max-width:1000px;width:100%;padding:10px}
+  .pol{background:#fffaf3;padding:10px 10px 0;border-radius:3px;box-shadow:0 18px 40px rgba(0,0,0,.45);width:clamp(140px,40vw,220px);cursor:pointer;
+    --r:0deg;transform:rotate(var(--r));animation:float var(--d,6s) ease-in-out infinite;animation-delay:var(--dl,0s);transition:box-shadow .3s}
+  .pol:hover{box-shadow:0 26px 60px rgba(242,167,184,.35);animation-play-state:paused}
+  .pol img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;border-radius:2px}
+  .pol p{font-family:'Great Vibes',cursive;color:#7a2a44;font-size:clamp(1.05rem,3.6vw,1.35rem);padding:8px 2px 10px;text-align:center;line-height:1.1}
+  .pol .tape{position:absolute;top:-10px;left:50%;width:70px;height:22px;margin-left:-35px;background:rgba(246,200,122,.55);transform:rotate(-4deg)}
+  .pol{position:relative}
+  @keyframes float{0%,100%{transform:rotate(var(--r)) translateY(0)}50%{transform:rotate(calc(var(--r) * -0.4)) translateY(-16px)}}
+  .drift{position:fixed;z-index:0;width:70px;padding:4px 4px 12px;background:#fffaf3;border-radius:2px;opacity:.16;pointer-events:none;animation:drift linear infinite}
+  .drift img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+  @keyframes drift{from{transform:translateY(110vh) rotate(-12deg)}to{transform:translateY(-30vh) rotate(14deg)}}
+  #lb{position:fixed;inset:0;z-index:80;background:rgba(10,4,18,.88);display:none;align-items:center;justify-content:center;flex-direction:column;padding:24px;cursor:zoom-out}
+  #lb.on{display:flex;animation:fade .35s}
+  @keyframes fade{from{opacity:0}}
+  #lb img{max-width:92vw;max-height:78vh;border:10px solid #fffaf3;border-bottom-width:14px;border-radius:3px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  #lb p{font-family:'Great Vibes',cursive;color:var(--blush);font-size:2rem;margin-top:14px}
+  footer{position:relative;z-index:1;padding:90px 20px 70px;text-align:center}
+  footer .script{font-size:clamp(2.6rem,9vw,4.4rem);color:var(--blush)}
+  footer p{opacity:.6;margin-top:8px;font-size:.85rem;letter-spacing:.15em}
+  .reveal{opacity:0;transform:translateY(30px);transition:1s ease}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<canvas id="fx"></canvas>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="eyebrow" id="eyebrow">6 November</div>
+  <div class="sub serif" id="pre" style="margin:0 0 6px">Happy Birthday</div>
+  <h1 class="name script">Deepu</h1>
+  <p class="sub" id="heroSub">The world got a little brighter the day you arrived.</p>
+  <div class="count" id="count"></div>
+  <div class="scroll">SCROLL ↓</div>
+</section>
+
+<!-- CAKE -->
+<section id="cakeSec">
+  <div class="reveal">
+    <h2>Make a wish first</h2>
+    <p class="hint">Close your eyes, make a wish, then tap the cake to blow out the candles</p>
+  </div>
+  <svg id="cake" viewBox="0 0 300 300" class="reveal" aria-label="Birthday cake">
+    <ellipse cx="150" cy="268" rx="130" ry="16" fill="#000" opacity=".25"/>
+    <ellipse cx="150" cy="258" rx="122" ry="14" fill="#e9d6c8"/>
+    <!-- bottom tier -->
+    <rect x="50" y="180" width="200" height="76" rx="8" fill="#f2a7b8"/>
+    <ellipse cx="150" cy="180" rx="100" ry="14" fill="#f8c4d0"/>
+    <path d="M50 186 q12 18 25 0 q12 18 25 0 q12 18 25 0 q12 18 25 0 q12 18 25 0 q12 18 25 0 q12 18 25 0 q12 18 25 0" fill="none" stroke="#fff6ec" stroke-width="7" stroke-linecap="round"/>
+    <!-- top tier -->
+    <rect x="85" y="120" width="130" height="62" rx="8" fill="#fbe3e8"/>
+    <ellipse cx="150" cy="120" rx="65" ry="10" fill="#fff6ec"/>
+    <g fill="#a8324f"><circle cx="105" cy="150" r="4"/><circle cx="130" cy="160" r="4"/><circle cx="160" cy="148" r="4"/><circle cx="190" cy="160" r="4"/></g>
+    <!-- candles -->
+    <g id="candles">
+      <g><rect x="116" y="84" width="8" height="38" rx="2" fill="#f6c87a"/><path class="flame" d="M120 64 q8 12 0 20 q-8 -8 0 -20z" fill="#ffb347"/><circle class="smoke" cx="120" cy="70" r="5" fill="#ccc"/></g>
+      <g><rect x="146" y="76" width="8" height="46" rx="2" fill="#f2a7b8" stroke="#fff6ec" stroke-width="1"/><path class="flame" d="M150 56 q8 12 0 20 q-8 -8 0 -20z" fill="#ffb347"/><circle class="smoke" cx="150" cy="62" r="5" fill="#ccc"/></g>
+      <g><rect x="176" y="84" width="8" height="38" rx="2" fill="#f6c87a"/><path class="flame" d="M180 64 q8 12 0 20 q-8 -8 0 -20z" fill="#ffb347"/><circle class="smoke" cx="180" cy="70" r="5" fill="#ccc"/></g>
+    </g>
+  </svg>
+  <div id="wishMsg">Your wish is on its way ✨</div>
+</section>
+
+<!-- LETTER -->
+<section id="letterSec">
+  <div class="reveal">
+    <h2>Something for you</h2>
+    <p class="hint">Tap the envelope</p>
+  </div>
+  <div class="env reveal" id="env">
+    <div class="env-back"></div><div class="peek"></div><div class="env-front"></div><div class="env-flap"></div>
+    <div class="seal">♥</div>
+  </div>
+  <div class="letter" id="letter">
+    <div class="dear">Happy Birthday, Deepu</div>
+    <p>I hope you achieve everything you have ever wished for in life. I will always be your biggest supporter, cheering for you through every success, every challenge, and every little moment in between.</p>
+    <p>And yes, I chose you as my life partner, and I want you to know that I choose you every single day. That's why I never needed any rituals or formal validation to accept you as my wife. The day I chose you, I chose you for everything that comes with life: enlightenment, entertainment, fights, gossip, friendship, laughter, adventures, and even silly little arguments.</p>
+    <p>I didn't choose you just for the happy moments; I chose you for all the moments, in every phase of life.</p>
+    <p>Stay as amazing, crazy, and wonderful as you are. Never stop being yourself.</p>
+    <p>Happy Birthday once again, my love!</p>
+    <p class="sign">Forever yours, Manas</p>
+  </div>
+</section>
+
+<!-- MEMORIES -->
+<section id="memSec">
+  <div class="reveal">
+    <h2>Little pieces of us</h2>
+    <p class="hint">Tap a memory to hold it closer</p>
+  </div>
+  <div class="memories" id="mem"></div>
+</section>
+
+<!-- REASONS -->
+<section id="reasons">
+  <div class="reveal">
+    <h2>A few reasons I love you</h2>
+    <p class="hint">Tap each card</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- WISH -->
+<section id="wishSec">
+  <div class="reveal">
+    <h2>Send a wish to the stars</h2>
+    <p class="hint">Type anything you want this year to bring you</p>
+  </div>
+  <form class="wishbox reveal" id="wishForm">
+    <input id="wishIn" maxlength="60" placeholder="I wish for…" autocomplete="off">
+    <button class="btn" type="submit">Send ✦</button>
+  </form>
+  <div id="wishCount"></div>
+</section>
+
+<div id="lb"><img alt=""><p></p></div>
+<footer>
+  <div class="script">Happy Birthday, Deepu</div>
+  <p>MADE WITH ALL MY LOVE · MANAS</p>
+</footer>
+
+<script>
+/* ---------- stars ---------- */
+const sc=document.getElementById('stars'),sx=sc.getContext('2d');let stars=[];
+function sizeStars(){sc.width=innerWidth*devicePixelRatio;sc.height=innerHeight*devicePixelRatio;
+  stars=Array.from({length:Math.round(innerWidth*innerHeight/5000)},()=>({x:Math.random()*sc.width,y:Math.random()*sc.height,r:Math.random()*1.3*devicePixelRatio+.2,p:Math.random()*6.28,s:.01+Math.random()*.02}))}
+function drawStars(){sx.clearRect(0,0,sc.width,sc.height);for(const s of stars){s.p+=s.s;sx.globalAlpha=.35+.65*Math.abs(Math.sin(s.p));sx.fillStyle='#fff6ec';sx.beginPath();sx.arc(s.x,s.y,s.r,0,6.28);sx.fill()}requestAnimationFrame(drawStars)}
+sizeStars();drawStars();addEventListener('resize',()=>{sizeStars();sizeFx()});
+
+/* ---------- confetti + hearts ---------- */
+const fc=document.getElementById('fx'),fx=fc.getContext('2d');let parts=[];
+function sizeFx(){fc.width=innerWidth;fc.height=innerHeight}sizeFx();
+const cols=['#f2a7b8','#f6c87a','#ffd9e1','#fff6ec','#c9476a'];
+function burst(x,y,n=140,hearts=false){for(let i=0;i<n;i++){const a=Math.random()*6.28,v=3+Math.random()*7;
+  parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-4,g:.15,r:Math.random()*6.28,vr:(Math.random()-.5)*.3,c:cols[i%cols.length],s:hearts?10+Math.random()*10:4+Math.random()*5,h:hearts||Math.random()<.18,life:1})}}
+function heart(c,s){c.beginPath();c.moveTo(0,s*.3);c.bezierCurveTo(0,0,-s*.5,0,-s*.5,s*.3);c.bezierCurveTo(-s*.5,s*.6,0,s*.8,0,s);c.bezierCurveTo(0,s*.8,s*.5,s*.6,s*.5,s*.3);c.bezierCurveTo(s*.5,0,0,0,0,s*.3);c.fill()}
+(function loop(){fx.clearRect(0,0,fc.width,fc.height);parts=parts.filter(p=>p.life>0&&p.y<fc.height+40);
+  for(const p of parts){p.vy+=p.g;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.life-=.006;
+    fx.save();fx.globalAlpha=Math.max(p.life,0);fx.translate(p.x,p.y);fx.rotate(p.r);fx.fillStyle=p.c;
+    if(p.h)heart(fx,p.s);else fx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);fx.restore()}requestAnimationFrame(loop)})();
+
+/* ---------- countdown (IST) ---------- */
+const start=new Date('2026-11-06T00:00:00+05:30'),end=new Date('2026-11-07T00:00:00+05:30');
+const countEl=document.getElementById('count');let celebrated=false;
+function tick(){const now=new Date();
+  if(now<start){const d=start-now,h=Math.floor(d/36e5),m=Math.floor(d%36e5/6e4),s=Math.floor(d%6e4/1e3);
+    document.getElementById('pre').textContent='Almost time for';
+    document.getElementById('heroSub').textContent='Your birthday begins in…';
+    countEl.innerHTML=[[h,'hours'],[m,'minutes'],[s,'seconds']].map(([v,l])=>`<div class="unit"><b>${String(v).padStart(2,'0')}</b><span>${l}</span></div>`).join('');
+  }else{
+    document.getElementById('pre').textContent='Happy Birthday';
+    document.getElementById('heroSub').textContent=now<end?'Today is all yours. The world got a little brighter the day you arrived.':'The world got a little brighter the day you arrived.';
+    countEl.innerHTML='';
+    if(!celebrated){celebrated=true;setTimeout(()=>{burst(innerWidth/2,innerHeight*.35,180);burst(innerWidth/2,innerHeight*.35,30,true)},500)}
+  }}
+tick();setInterval(tick,1000);
+
+/* ---------- cake ---------- */
+const cake=document.getElementById('cake');let blown=false;
+cake.addEventListener('click',()=>{if(blown){cake.classList.remove('out');blown=false;document.getElementById('wishMsg').style.opacity=0;return}
+  blown=true;cake.classList.add('out');const b=cake.getBoundingClientRect();
+  setTimeout(()=>{burst(b.left+b.width/2,b.top+b.height*.3,200);burst(b.left+b.width/2,b.top+b.height*.3,40,true);document.getElementById('wishMsg').style.opacity=1},350)});
+
+/* ---------- letter ---------- */
+const env=document.getElementById('env');
+env.addEventListener('click',()=>{if(env.classList.contains('open'))return;env.classList.add('open');
+  const b=env.getBoundingClientRect();setTimeout(()=>burst(b.left+b.width/2,b.top+b.height/2,40,true),500);
+  setTimeout(()=>{const l=document.getElementById('letter');l.classList.add('show');setTimeout(()=>l.scrollIntoView({behavior:'smooth',block:'start'}),300)},1100)});
+
+/* ---------- reasons ---------- */
+const reasons=[
+ "You are an angry bird, but you bring the most beautiful colours into my life.",
+ "You make even the most boring days feel like an adventure.",
+ "You care about people so deeply, even when no one is watching.",
+ "Your laugh. Honestly, it's my favourite sound in the world.",
+ "You believe in me, even on the days I forget to believe in myself.",
+ "I love you because of how pure a soul you are.",
+ "You're beautiful, inside and out, and you don't even realise it.",
+ "Because you're you. And there's no one else I'd rather have."
+];
+document.getElementById('grid').innerHTML=reasons.map((r,i)=>`<div class="card reveal"><div class="inner"><div class="face front"><div class="n">${String(i+1).padStart(2,'0')}<small>REASON</small></div></div><div class="face back">${r}</div></div></div>`).join('');
+document.querySelectorAll('.card').forEach(c=>c.addEventListener('click',e=>{c.classList.toggle('flip');if(c.classList.contains('flip')){const b=c.getBoundingClientRect();burst(b.left+b.width/2,b.top+b.height/2,12,true)}}));
+
+/* ---------- wishes ---------- */
+let wishes=0;
+document.getElementById('wishForm').addEventListener('submit',e=>{e.preventDefault();const inp=document.getElementById('wishIn'),t=inp.value.trim();if(!t)return;
+  const b=inp.getBoundingClientRect(),el=document.createElement('div');el.className='flying';el.textContent='✦ '+t;
+  el.style.left=b.left+20+'px';el.style.top=b.top+'px';document.body.appendChild(el);
+  requestAnimationFrame(()=>{el.style.transform=`translate(${(Math.random()-.5)*200}px,${-b.top-80}px) scale(.4)`;el.style.opacity=0});
+  setTimeout(()=>{el.remove();burst(innerWidth/2,40,50)},3000);inp.value='';wishes++;
+  document.getElementById('wishCount').textContent=wishes===1?'1 wish sent. The stars are listening ✨':`${wishes} wishes sent. The stars are listening ✨`});
+
+
+/* ---------- memories ---------- */
+const mems=[
+ ["img/m11.jpg","The day we first met \u2728"],
+ ["img/m12.jpg","The first flowers I gave you \u{1F490}"],
+ ["img/m1.jpg","My winner \u{1F3C5}"],
+ ["img/m2.jpg","Flowers & that face \u{1F61B}"],
+ ["img/m3.jpg","Kisses under the trees \u{1F618}"],
+ ["img/m4.jpg","My crazy one \u{1F92A}"],
+ ["img/m5.jpg","Dinner dates with you"],
+ ["img/m6.jpg","That little smile"],
+ ["img/m7.jpg","Our video call madness \u{1F4F1}"],
+ ["img/m8.jpg","Wearing my M \u{1F497}"],
+ ["img/m9.jpg","Us, being us \u{1F61C}"],
+ ["img/m10.jpg","Hand in hand, forever"]
+];
+const rots=[-3,5,-6,4,-3,7,-5,3,-4,6,-7,2];
+document.getElementById('mem').innerHTML=mems.map(([src,cap],i)=>`<div class="pol reveal" style="--r:${rots[i]}deg;--d:${5+i%3*1.3}s;--dl:${-i*0.9}s" data-i="${i}"><span class="tape"></span><img src="${src}" alt="${cap}" loading="lazy"><p>${cap}</p></div>`).join('');
+const lb=document.getElementById('lb');
+document.querySelectorAll('.pol').forEach(p=>p.addEventListener('click',()=>{const [src,cap]=mems[p.dataset.i];lb.querySelector('img').src=src;lb.querySelector('p').textContent=cap;lb.classList.add('on');
+  const b=p.getBoundingClientRect();burst(b.left+b.width/2,b.top+b.height/2,16,true)}));
+lb.addEventListener('click',()=>lb.classList.remove('on'));
+/* faint photos drifting up behind everything */
+mems.forEach(([src],i)=>{const d=document.createElement('div');d.className='drift';d.innerHTML=`<img src="${src}" alt="">`;
+  d.style.left=(2+i*8+Math.random()*3)+'vw';d.style.animationDuration=(26+i%5*5)+'s';d.style.animationDelay=(-i*5)+'s';document.body.insertBefore(d,document.body.firstChild)});
+
+/* ---------- scroll reveal ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
